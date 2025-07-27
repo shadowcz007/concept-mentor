@@ -1,13 +1,37 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState, useEffect } from "react";
+import SettingsPage from "@/components/settings-page";
+import LearningInterface from "@/components/learning-interface";
 
 const Index = () => {
+  const [settings, setSettings] = useState<{ model: string; token: string } | null>(null);
+
+  useEffect(() => {
+    // 从localStorage加载设置
+    const savedSettings = localStorage.getItem('ai-tutor-settings');
+    if (savedSettings) {
+      setSettings(JSON.parse(savedSettings));
+    }
+  }, []);
+
+  const handleSettingsComplete = (newSettings: { model: string; token: string }) => {
+    setSettings(newSettings);
+    localStorage.setItem('ai-tutor-settings', JSON.stringify(newSettings));
+  };
+
+  const handleSettingsClick = () => {
+    setSettings(null);
+    localStorage.removeItem('ai-tutor-settings');
+  };
+
+  if (!settings) {
+    return <SettingsPage onComplete={handleSettingsComplete} />;
+  }
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <LearningInterface 
+      settings={settings} 
+      onSettingsClick={handleSettingsClick}
+    />
   );
 };
 
