@@ -97,11 +97,11 @@ const LearningInterface = ({ settings, onSettingsClick }: LearningInterfaceProps
       const messages = [
         {
           role: "system",
-          content: "你是一个优秀的AI导师，擅长用通俗易懂的语言解释复杂概念。请用简洁明了的中文来解释用户提出的概念，确保高中生或大学生能够理解。解释应该包含：1) 基本定义 2) 通俗解释 3) 一个生动的例子。回答控制在300字以内。"
+          content: "You are an excellent AI tutor who excels at explaining complex concepts in simple terms. Please explain the user's concept in clear and concise English, ensuring high school or college students can understand. Your explanation should include: 1) 📚 Basic definition 2) 💡 Simple explanation 3) 🎯 A vivid example. Keep your response within 300 words and use appropriate emojis to make it engaging and easy to follow. Make the explanation fun and memorable!"
         },
         {
           role: "user",
-          content: `请解释这个概念：${currentTopic}`
+          content: `Please explain this concept: ${currentTopic}`
         }
       ];
 
