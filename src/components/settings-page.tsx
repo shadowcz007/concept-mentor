@@ -1,32 +1,46 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Settings, Save, Key } from "lucide-react";
+import { Settings, Save, Key, AlertCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { env, validateEnv } from "@/config/env";
 
 interface SettingsPageProps {
-  onComplete: (settings: { model: string; token: string }) => void;
+  onComplete: (settings: { model: string }) => void;
 }
 
 const SettingsPage = ({ onComplete }: SettingsPageProps) => {
-  const [model, setModel] = useState("Qwen/QwQ-32B");
-  const [token, setToken] = useState("");
+  const [model, setModel] = useState(env.DEFAULT_MODEL);
+  const [isEnvValid, setIsEnvValid] = useState(true);
   const { toast } = useToast();
 
-  const handleSave = () => {
-    if (!token.trim()) {
+  useEffect(() => {
+    const isValid = validateEnv();
+    setIsEnvValid(isValid);
+    
+    if (!isValid) {
       toast({
-        title: "Token必需",
-        description: "请输入您的API Token",
+        title: "环境变量配置错误",
+        description: "请检查 .env 文件中的 API Token 配置",
+        variant: "destructive",
+      });
+    }
+  }, [toast]);
+
+  const handleSave = () => {
+    if (!isEnvValid) {
+      toast({
+        title: "环境变量配置错误",
+        description: "请先配置正确的 API Token",
         variant: "destructive",
       });
       return;
     }
 
-    onComplete({ model, token });
+    onComplete({ model });
     toast({
       title: "设置已保存",
       description: "AI导师配置成功！",
@@ -72,19 +86,28 @@ const SettingsPage = ({ onComplete }: SettingsPageProps) => {
                 </p>
               </div>
 
+              {!isEnvValid && (
+                <div className="flex items-center gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
+                  <AlertCircle className="w-4 h-4 text-destructive" />
+                  <div className="text-sm">
+                    <p className="font-medium text-destructive">环境变量配置错误</p>
+                    <p className="text-xs text-muted-foreground">
+                      请在项目根目录创建 .env 文件并配置 VITE_SILICONFLOW_API_TOKEN
+                    </p>
+                  </div>
+                </div>
+              )}
+              
               <div className="space-y-2">
-                <Label htmlFor="token" className="text-sm font-medium text-foreground">API Token</Label>
-                <Input
-                  id="token"
-                  type="password"
-                  placeholder="请输入您的SiliconFlow API Token"
-                  value={token}
-                  onChange={(e) => setToken(e.target.value)}
-                  className="bg-background border-border"
-                />
-                <p className="text-xs text-muted-foreground">
-                  您可以在 <a href="https://cloud.siliconflow.cn" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">SiliconFlow控制台</a> 获取您的API Token
-                </p>
+                <Label className="text-sm font-medium text-foreground">API Token 配置</Label>
+                <div className="p-3 bg-muted/50 border border-border rounded-lg">
+                  <p className="text-xs text-muted-foreground">
+                    API Token 已通过环境变量配置。如需修改，请编辑项目根目录的 .env 文件。
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    您可以在 <a href="https://cloud.siliconflow.cn" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">SiliconFlow控制台</a> 获取您的API Token
+                  </p>
+                </div>
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@ import SettingsPage from "@/components/settings-page";
 import LearningInterface from "@/components/learning-interface";
 
 const Index = () => {
-  const [settings, setSettings] = useState<{ model: string; token: string } | null>(null);
+  const [settings, setSettings] = useState<{ model: string } | null>(null);
 
   useEffect(() => {
     // 从localStorage加载设置
@@ -13,7 +13,7 @@ const Index = () => {
     }
   }, []);
 
-  const handleSettingsComplete = (newSettings: { model: string; token: string }) => {
+  const handleSettingsComplete = (newSettings: { model: string }) => {
     setSettings(newSettings);
     localStorage.setItem('ai-tutor-settings', JSON.stringify(newSettings));
   };

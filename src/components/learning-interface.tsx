@@ -18,9 +18,10 @@ import {
   Settings
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { ApiService } from "@/services/api";
 
 interface LearningInterfaceProps {
-  settings: { model: string; token: string };
+  settings: { model: string };
   onSettingsClick: () => void;
 }
 
@@ -60,26 +61,12 @@ const LearningInterface = ({ settings, onSettingsClick }: LearningInterfaceProps
   }, [explanation, questions, showFeedback]);
 
   const callAI = async (messages: any[]) => {
-    const response = await fetch('https://api.siliconflow.cn/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${settings.token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: settings.model,
-        messages: messages,
-        temperature: 0.7,
-        max_tokens: 2000
-      })
+    return ApiService.chatCompletion({
+      model: settings.model,
+      messages: messages,
+      temperature: 0.7,
+      max_tokens: 2000
     });
-
-    if (!response.ok) {
-      throw new Error(`API调用失败: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data.choices[0].message.content;
   };
 
   const handleTopicSubmit = async () => {

@@ -1,38 +1,73 @@
-# Welcome to your Lovable project
+# Concept Mentor - AI 学习助手
 
-## Project info
+一个基于 AI 的智能学习助手，帮助用户更好地理解和掌握各种概念。
+
+## 项目信息
 
 **URL**: https://lovable.dev/projects/9523ccc6-e9ec-4e56-a3fb-a39fc5fed240
 
-## How can I edit this code?
+## 快速开始
 
-There are several ways of editing your application.
+### 环境变量配置
 
-**Use Lovable**
+在开始使用之前，您需要配置环境变量：
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/9523ccc6-e9ec-4e56-a3fb-a39fc5fed240) and start prompting.
+1. 复制环境变量示例文件：
+```bash
+cp env.example .env
+```
 
-Changes made via Lovable will be committed automatically to this repo.
+2. 编辑 `.env` 文件，填入您的 SiliconFlow API Token：
+```bash
+VITE_SILICONFLOW_API_TOKEN=your_siliconflow_api_token_here
+```
 
-**Use your preferred IDE**
+3. 获取 API Token：
+   - 访问 [SiliconFlow 控制台](https://cloud.siliconflow.cn)
+   - 注册并登录您的账户
+   - 在控制台中获取您的 API Token
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+详细配置说明请参考：[环境变量配置指南](./ENV_SETUP.md)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### 开发环境
 
-Follow these steps:
+```bash
+# 安装依赖
+npm install
+
+# 启动开发服务器
+npm run dev
+```
+
+## 如何编辑代码？
+
+有多种方式可以编辑您的应用程序：
+
+**使用 Lovable**
+
+访问 [Lovable Project](https://lovable.dev/projects/9523ccc6-e9ec-4e56-a3fb-a39fc5fed240) 并开始提示。
+
+通过 Lovable 所做的更改将自动提交到此仓库。
+
+**使用您喜欢的 IDE**
+
+如果您想使用自己的 IDE 在本地工作，可以克隆此仓库并推送更改。推送的更改也会反映在 Lovable 中。
+
+唯一的要求是安装 Node.js 和 npm - [使用 nvm 安装](https://github.com/nvm-sh/nvm#installing-and-updating)
+
+按照以下步骤操作：
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# 步骤 1: 使用项目的 Git URL 克隆仓库。
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
+# 步骤 2: 导航到项目目录。
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
+# 步骤 3: 安装必要的依赖。
 npm i
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# 步骤 4: 启动开发服务器，具有自动重载和即时预览。
 npm run dev
 ```
 
